@@ -1,0 +1,6 @@
+/node_modules/
+/vendor/
+/js/app.js
+/css/app.css
+composer.lock
+package-lock.json

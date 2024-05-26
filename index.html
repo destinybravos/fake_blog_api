@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake Blog API</title>
+    <link rel="stylesheet" href="css/app.css">
+    <script src="js/app.js"></script>
+</head>
+<body>
+
+    <header>
+        <div class="container bg-blue-500 min-h-10 flex justify-between items-center py-2">
+            <div>
+                <img src="./images/favicon.svg" alt=" " class=""> 
+                <span>Fake Blog API</span>
+            </div>
+        </div>
+    </header>
+
+
+
+    <div class="reset-tw">
+        <div id="content"></div>
+    </div>
+    
+    <script>
+        async function getRemoteMarkdownContent(url) {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                throw new Error(`Error fetching markdown file: ${response.statusText}`);
+                }
+                const content = await response.text();
+                return content;
+            } catch (error) {
+                console.error("Error:", error);
+                return null; // Handle error or return empty content
+            }
+        }
+
+        // Example usage
+        const markdownUrl = "README.md";
+        getRemoteMarkdownContent(markdownUrl)
+        .then(content => {
+            if (content) {
+                // Process the retrieved markdown content (e.g., display, parse)
+                document.getElementById('content').innerHTML = marked.parse(content);
+            }
+        })
+        .catch(error => {
+            alert("Could not load or read documentation file.")
+            console.error("Error fetching content:", error);
+        });
+    </script>
+</body>
+</html>
