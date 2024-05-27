@@ -5,23 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fake Blog API</title>
     <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/fa_icons_6/css/all.css">
     <script src="js/app.js"></script>
 </head>
 <body>
 
     <header>
-        <div class="container bg-blue-500 min-h-10 flex justify-between items-center py-2">
-            <div>
-                <img src="./images/favicon.svg" alt=" " class=""> 
-                <span>Fake Blog API</span>
+        <div class="container flex justify-between items-center py-3">
+            <div class="flex items-center gap-2">
+                <img src="./images/favicon.svg" alt=" " class="h-7"> 
+                <span class="font-bold text-lg text-primary">Fake<span class="text-emerald-500 uppercase">Blog</span> API</span>
             </div>
+
+            <nav>
+                <ul class="flex items-center gap-4">
+                    <li>
+                        <a href="#" class="py-2 px-4">Home</a>
+                    </li>
+                    <li>
+                        <a href="#" class="py-2 px-4">Manage API</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </header>
 
+    <div class="container min-h-[60dvh] py-16 flex items-center justify-between">
+        <section>
+            Instructions
+        </section>
+
+        <section class="flex-grow max-w-3xl flex justify-center items-center">
+            <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
+                <button class="bg-primary text-white rounded-sm py-2 px-4 text-center text-sm font-semibold">
+                    Create/Configure Database
+                </button>
+                <button class="bg-primary text-white rounded-sm py-2 px-4 text-center text-sm font-semibold">
+                    Migrate DB Structure
+                </button>
+            </div>
+        </section>
+    </div>
 
 
-    <div class="reset-tw">
-        <div id="content"></div>
+    <div class="container py-3 border rounded-2xl">
+        <aside class="border-b px-5">
+            <h1 class="inline-block border-b-2 border-emerald-500">
+                <i class="fa-solid fa-book-open"></i> Documentation
+            </h1>
+        </aside>
+        
+        <aside class="px-5 mt-5">
+            <div id="content" class="reset-tw"></div>
+        </aside>
     </div>
     
     <script>

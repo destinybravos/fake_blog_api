@@ -2,7 +2,11 @@
 module.exports = {
   content: ["./content_maager/**/*.{js,php,html}", "./index.html"],
   theme: {
-    extend: {},
+    extend: {
+      colors : {
+        primary : "#004c98"
+      }
+    },
   },
   plugins: [],
 }
