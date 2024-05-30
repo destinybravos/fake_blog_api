@@ -1,8 +1,11 @@
 <?php
 
-$hostname = "localhost";
-$host_username = "root";
-$host_password = "";
-$database = "fake_blog_api";
+$hostname = 'localhost';
+$server_username = 'root';
+$server_password = '';
+$database = 'fake_blog_api';
 
-$conn = new MySQLi($hostname, $host_username, $host_password, $database);
+
+$conn = new MySQLi($hostname, $server_username, $server_password, $database);
+
+?>

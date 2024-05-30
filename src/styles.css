@@ -10,3 +10,7 @@
 .container {
     @apply max-w-6xl mx-auto px-4;
 }
+
+.input-classes {
+    @apply border shadow-sm w-full px-3 py-1 h-8 rounded-md block;
+}

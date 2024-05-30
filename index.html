@@ -31,17 +31,42 @@
     </header>
 
     <div class="container min-h-[60dvh] py-16 flex items-center justify-between">
-        <section>
-            Instructions
+        <section class="md:max-w-xl">
+            <h2 class="font-bold text-3xl">Instructions</h2>
+            <hr class="w-24 border-primary border-2">
+
+            <div class="mt-4">
+                <ul class="space-y-4">
+                    <li class="flex items-start gap-3 text-sm">
+                        <strong class="flex-shrink-0">Step 1: </strong> 
+                        <span class="flex-grow">
+                            Click on the <span class="">"Create/Configure Database"</span> button to 
+                            first save your database configurations. On the modal, change according to your server configurations.
+                        </span>
+                    </li>
+                </ul>
+            </div>
         </section>
 
         <section class="flex-grow max-w-3xl flex justify-center items-center">
             <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
-                <button class="bg-primary text-white rounded-sm py-2 px-4 text-center text-sm font-semibold">
+                <button class="bg-primary text-white rounded-sm py-2 px-4 text-center text-sm font-semibold" onclick="toggleModal(true)">
                     Create/Configure Database
                 </button>
-                <button class="bg-primary text-white rounded-sm py-2 px-4 text-center text-sm font-semibold">
+                <button class="bg-primary text-white rounded-sm py-2 px-4 text-center text-sm font-semibold" onclick="createDBStructure()">
                     Migrate DB Structure
+                </button>
+                <button class="bg-primary text-white rounded-sm py-2 px-4 text-center text-sm font-semibold" onclick="createCategories()">
+                    Seed (Populate) Categories
+                </button>
+                <button class="bg-primary text-white rounded-sm py-2 px-4 text-center text-sm font-semibold">
+                    Seed (Populate) Authors
+                </button>
+                <button class="bg-primary text-white rounded-sm py-2 px-4 text-center text-sm font-semibold">
+                    Seed (Populate) Posts & Reactions
+                </button>
+                <button class="bg-primary text-white rounded-sm py-2 px-4 text-center text-sm font-semibold">
+                    Seed (Populate) All Data
                 </button>
             </div>
         </section>
@@ -58,6 +83,76 @@
         <aside class="px-5 mt-5">
             <div id="content" class="reset-tw"></div>
         </aside>
+    </div>
+
+
+    <!-- Modals -->
+    <!-- Overlay -->
+    <div id="modal_overlay" class="bg-black bg-opacity-50 fixed h-full w-full top-0 left-0 z-10 hidden"></div>
+    <!-- Modal for Server Config -->
+    <div id="server_modal" class="hidden justify-center items-center h-full w-full fixed top-0 left-0 z-20 px-5">
+        <section class="bg-white w-full md:max-w-xl">
+            <h1 class="py-2 px-4 border-b font-bold text-primary relative">
+                Create/Configure Database
+
+                <button class="absolute -right-2 -top-2" onclick="toggleModal(false)">
+                    <i class="fa fa-times-circle text-2xl text-red-500"></i>
+                </button>
+            </h1>
+            <div class="py-2 px-4">
+                <h3 class="py-2 px-3 bg-orange-100 text-xs mb-4">
+                    <strong class="text-orange-500">Warning!</strong> Do not change the 
+                    below configurations <strong>(EXCEPT: Database Name)</strong> if you are using XAMPP 
+                    default settings or you do not understand the process.
+                </h3>
+                <form name="frm_server_config" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <aside>
+                        <label class="text-xs font-semibold text-primary" for="db_type">Database Type</label>
+                        <select name="db_type" id="db_type" class="input-classes bg-transparent">
+                            <option value="mysql">MySQL</option>
+                        </select>
+                    </aside>
+                    <aside>
+                        <label class="text-xs font-semibold text-primary" for="hostname">Server Hostname</label>
+                        <input type="text" name="hostname" id="hostname" class="input-classes" value="localhost">
+                    </aside>
+                    <aside>
+                        <label class="text-xs font-semibold text-primary" for="username">Server Username</label>
+                        <input type="text" name="username" id="username" class="input-classes" value="root">
+                    </aside>
+                    <aside>
+                        <label class="text-xs font-semibold text-primary" for="password">Server Password</label>
+                        <input type="password" name="password" id="password" class="input-classes">
+                    </aside>
+                    <aside>
+                        <label class="text-xs font-semibold text-primary" for="password">Database Name <small>(Default: fake_blog_api)</small></label>
+                        <input type="text" name="db_name" id="db_name" class="input-classes" value="fake_blog_api">
+                    </aside>
+                    <aside>
+                        &nbsp;
+                    </aside>
+                    <aside class="mb-2">
+                        <label for="">&nbsp;</label>
+                        <button class="bg-primary text-white py-1 px-3">
+                            <span class="inline-block mr-2 process_state">
+                                <i class="fa fa-save"></i>
+                            </span>
+
+                            Save Configuration
+                        </button>
+                    </aside>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal for Processing -->
+    <div id="processing_modal" class="hidden justify-center items-center h-full w-full fixed top-0 left-0 z-20 px-5">
+        <section class="bg-white w-full md:max-w-xl">
+            <div class="py-2 px-4 min-h-52 flex justify-center items-center">
+                <i class="fas fa-spinner fa-4x fa-spin text-primary"></i>
+            </div>
+        </section>
     </div>
     
     <script>
@@ -88,6 +183,89 @@
             alert("Could not load or read documentation file.")
             console.error("Error fetching content:", error);
         });
+
+        // save server config on form submit
+        let processing = (state, defaultIcon = '<i class="fa fa-save"></i>', el_class = 'process_state') => {
+            document.querySelectorAll(`.${el_class}`).forEach((element) => {
+                if (state == true) {
+                    element.innerHTML = '<i class="fa fa-circle-notch fa-spin"></i>';
+                } else {
+                    element.innerHTML = defaultIcon;
+                }
+            })
+        }
+
+        let toggleModal = (state = false, modal_id = 'server_modal') => {
+            let Overlay = document.getElementById('modal_overlay');
+            let modal = document.getElementById(modal_id);
+            if (state == true) {
+                Overlay.classList.add('block');
+                modal.classList.add('flex');
+                Overlay.classList.remove('hidden');
+                modal.classList.remove('hidden');
+            }else{
+                Overlay.classList.add('hidden');
+                modal.classList.add('hidden');
+                Overlay.classList.remove('block');
+                modal.classList.remove('flex');
+            }
+        }
+
+        document.forms['frm_server_config'].addEventListener('submit', (e) => {
+            e.preventDefault();
+            processing(true);
+            let formData = new FormData(e.target);
+            axios.post('api/migration/create_server_config.php', formData)
+            .then((res) => {
+                processing(false);
+                if (res.data.success) {
+                    alert(res.data.message)
+                    toggleModal(false);
+                }else{
+                    alert(res.data.message)
+                }
+            })
+            .catch((error) => {
+                processing(false);
+                alert(error.response.data.message)
+            })
+        })
+
+        // Create All DB Structures (Tables)
+        let createDBStructure = () => {
+            toggleModal(true, 'processing_modal');
+            axios.post('api/migration/create_db_structures.php')
+            .then((res) => {
+                toggleModal(false, 'processing_modal');
+                if (res.data.success) {
+                    alert(res.data.message)
+                }else{
+                    alert(res.data.message ? res.data.message : 'An error occured! Make sure your database configuration have been saved');
+                }
+            })
+            .catch((error) => {
+                toggleModal(false, 'processing_modal');
+                alert(res.data.message ? res.data.message : 'An error occured! Make sure your database configuration have been saved');
+            })
+        }
+
+        // Create All DB Structures (Tables)
+        let createCategories = () => {
+            toggleModal(true, 'processing_modal');
+            axios.post('api/migration/seed_categories.php')
+            .then((res) => {
+                toggleModal(false, 'processing_modal');
+                if (res.data.success) {
+                    alert(res.data.message)
+                }else{
+                    alert(res.data.message ? res.data.message : 'An error occured! Make sure your database configuration have been saved');
+                }
+            })
+            .catch((error) => {
+                toggleModal(false, 'processing_modal');
+                alert(res.data.message ? res.data.message : 'An error occured! Make sure your database configuration have been saved');
+            })
+        }
     </script>
 </body>
 </html>
