@@ -4,3 +4,4 @@
 /css/app.css
 composer.lock
 package-lock.json
+.env
