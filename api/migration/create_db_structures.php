@@ -12,6 +12,20 @@ try {
         )";
     $conn->query($sqlCategories);
 
+    // create post_category table structure if not exist
+    $sqlUsers = "CREATE TABLE IF NOT EXISTS users (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        username VARCHAR(255) NOT NULL,
+        fullname VARCHAR(255) NOT NULL,
+        email VARCHAR(255) NOT NULL,
+        phone VARCHAR(255),
+        website VARCHAR(255),
+        avatar VARCHAR(255),
+        created_at DATETIME DEFAULT(CURRENT_TIMESTAMP),
+        updated_at DATETIME DEFAULT(CURRENT_TIMESTAMP)
+        )";
+    $conn->query($sqlUsers);
+
     // Other Table Structures will come next
 
 
