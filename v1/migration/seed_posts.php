@@ -249,7 +249,7 @@ function getPosts(){
             "poster_image" => "/images/blog/binge_watch.avif"
         ],
         [
-            "title" => "Navigating the Stock Market: A Beginner's Guide",
+            "title" => "Navigating the Stock Market: A Beginners Guide",
             "category" => "Stock Market",
             "content" => "<p style='margin-bottom: 10px;'>
                                 The stock market can seem like a complex and intimidating place, filled with jargon and rapid-fire ticker movements. But fear not, aspiring investor! This article is your launchpad for understanding the basics of the stock market and taking your first steps.
