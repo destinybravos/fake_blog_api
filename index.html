@@ -62,7 +62,7 @@
                 <button class="bg-primary text-white rounded-sm py-2 px-4 text-center text-sm font-semibold" onclick="createAuthor()">
                     Seed (Populate) Authors
                 </button>
-                <button class="bg-primary text-white rounded-sm py-2 px-4 text-center text-sm font-semibold">
+                <button class="bg-primary text-white rounded-sm py-2 px-4 text-center text-sm font-semibold" onclick="createBlogPosts()">
                     Seed (Populate) Posts & Reactions
                 </button>
                 <button class="bg-primary text-white rounded-sm py-2 px-4 text-center text-sm font-semibold">
@@ -215,7 +215,7 @@
             e.preventDefault();
             processing(true);
             let formData = new FormData(e.target);
-            axios.post('api/migration/create_server_config.php', formData)
+            axios.post('v1/migration/create_server_config.php', formData)
             .then((res) => {
                 processing(false);
                 if (res.data.success) {
@@ -234,7 +234,7 @@
         // Create All DB Structures (Tables)
         let createDBStructure = () => {
             toggleModal(true, 'processing_modal');
-            axios.post('api/migration/create_db_structures.php')
+            axios.post('v1/migration/create_db_structures.php')
             .then((res) => {
                 toggleModal(false, 'processing_modal');
                 if (res.data.success) {
@@ -252,7 +252,7 @@
         // Create All DB Structures (Tables)
         let createCategories = () => {
             toggleModal(true, 'processing_modal');
-            axios.post('api/migration/seed_categories.php')
+            axios.post('v1/migration/seed_categories.php')
             .then((res) => {
                 toggleModal(false, 'processing_modal');
                 if (res.data.success) {
@@ -270,7 +270,25 @@
         // Create All DB Structures (Tables)
         let createAuthor = () => {
             toggleModal(true, 'processing_modal');
-            axios.post('api/migration/create_users.php')
+            axios.post('v1/migration/create_users.php')
+            .then((res) => {
+                toggleModal(false, 'processing_modal');
+                if (res.data.success) {
+                    alert(res.data.message)
+                }else{
+                    alert(res.data.message ? res.data.message : 'An error occured! Make sure your database configuration have been saved');
+                }
+            })
+            .catch((error) => {
+                toggleModal(false, 'processing_modal');
+                alert(res.data.message ? res.data.message : 'An error occured! Make sure your database configuration have been saved');
+            })
+        }
+
+        // Create All DB Structures (Tables)
+        let createBlogPosts = () => {
+            toggleModal(true, 'processing_modal');
+            axios.post('v1/migration/seed_posts.php')
             .then((res) => {
                 toggleModal(false, 'processing_modal');
                 if (res.data.success) {

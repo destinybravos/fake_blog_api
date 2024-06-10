@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .reset-tw,
-.reset-tw * {
+.reset-tw *:not(pre):not(code) {
     all: revert !important;
 }
 
@@ -13,4 +13,14 @@
 
 .input-classes {
     @apply border shadow-sm w-full px-3 py-1 h-8 rounded-md block;
+}
+
+pre{
+    background-color: rgb(239, 238, 238) !important;
+    padding: 8px 12px;
+}
+
+code{
+    background-color: rgb(239, 238, 238) !important;
+    padding: 0 8px;
 }

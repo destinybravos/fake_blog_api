@@ -26,6 +26,22 @@ try {
         )";
     $conn->query($sqlUsers);
 
+    // Create table for blogposts
+    // create blogposts table structure if not exist
+    $sqlBlogposts = "CREATE TABLE IF NOT EXISTS blogposts (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        title VARCHAR(255) NOT NULL,
+        content TEXT NOT NULL,
+        author_id INT,
+        category_id INT,
+        poster_image VARCHAR(1000),
+        created_at DATETIME DEFAULT(CURRENT_TIMESTAMP),
+        updated_at DATETIME DEFAULT(CURRENT_TIMESTAMP),
+        FOREIGN KEY (author_id) REFERENCES users(id),
+        FOREIGN KEY (category_id) REFERENCES post_category(id)
+        )";
+        $conn->query($sqlBlogposts);
+
     // Other Table Structures will come next
 
 

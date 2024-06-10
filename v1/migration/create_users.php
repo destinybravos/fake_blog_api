@@ -15,11 +15,11 @@ try {
         $phone = $user['phone'];
         $website = $user['website'];
         $avatar = $user['avatar'];
-
-        $insert_sql = "INSERT INTO users(username,fullname,email,phone,website,avatar) 
-                VALUES ('$username','$name','$email','$phone','$website','$avatar')";
-        $conn->query($insert_sql);
-
+        if (!userEmailExists($email, $conn)) {
+            $insert_sql = "INSERT INTO users(username,fullname,email,phone,website,avatar) 
+                    VALUES ('$username','$name','$email','$phone','$website','$avatar')";
+            $conn->query($insert_sql);
+        }
     }
     $conn->close();
 
@@ -35,4 +35,17 @@ try {
         'success' => false,
         'message' => $th->getMessage()
     ]);
+}
+
+
+function userExists($username, $conn) {
+    $sql = "SELECT * FROM users WHERE username = '$username'";
+    $result = $conn->query($sql);
+    return $result->num_rows > 0;
+}
+
+function userEmailExists($email, $conn) {
+    $sql = "SELECT * FROM users WHERE email = '$email'";
+    $result = $conn->query($sql);
+    return $result->num_rows > 0;
 }
