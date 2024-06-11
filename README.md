@@ -22,7 +22,7 @@ The Fake Blog API is a **free api solution** that allows you to perform various 
 
 ## Getting Started (Usage)
 To start using the Fake Blog API, you'll need to first consider the method of usage as the project can be used by cloning a copy of it to your local environment or by using the official programmers city fake blog base URL.
-
+  
 ### Cloning a copy of the project
 
 You can clone the project into your local machine from this repository:
@@ -33,13 +33,35 @@ https://github.com/destinybravos/fake_blog_api.git
 Make sure you have a PHP Web-Solution stack (Local Server) installed in you local machine as the project needs the **Apache** and **MySQL** services to run. A very good example is the **XAMPP Server** in which you have to clone the project into the `htdocs` folder, then you can access it with the base url `http://localhost/fake_blog_api`.
 
 ### Example Request
-
-Here is a simple example of how to fetch all blog posts:
+#### Fetch Categories
+Here is a simple example of how to fetch all categories:
 
 ```sh
-curl -X GET "https://api.programmerscity.com/v1/fakeblog/posts" \
-     -H "Authorization: Bearer YOUR_API_KEY"
+curl -X POST "http://localhost/fake_blog_api/v1/category/fetch.php" 
 ```
+
+#### Fetch Users
+Here is a simple example of how to fetch all users:
+
+```sh
+curl -X POST "http://localhost/fake_blog_api/v1/users/fetch.php" 
+```
+
+#### Fetch Posts
+Here is a simple example of how to fetch all categories:
+
+```sh
+curl -X POST "http://localhost/fake_blog_api/v1/posts/fetch_all.php" 
+```
+
+#### Fetch A Post with Details
+Here is a simple example of how to fetch all categories:
+
+```sh
+curl -X POST "http://localhost/fake_blog_api/v1/posts/fetch_details.php?post_id={id}" 
+```
+
+
 
 ### Example Response
 
