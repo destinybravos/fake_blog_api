@@ -5,7 +5,7 @@ header("Access-Control-Allow-Origin: *");
 include_once '../utils/connect.php';
 
 // Use the MySQLi object $conn to fetch all posts from the blogposts table
-$sql = "SELECT * FROM blogposts";
+$sql = "SELECT * FROM blogposts ORDER BY created_at DESC";
 $result = $conn->query($sql);
 
 $posts = array();
