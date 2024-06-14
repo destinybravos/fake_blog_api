@@ -657,7 +657,7 @@ function getPosts(){
             "poster_image" => "/images/blog/food2.jpg"
         ],
         [
-            "title" => "Savoring Life's Flavors: A Culinary Adventure",
+            "title" => "Savoring Life Flavors: A Culinary Adventure",
             "category" => "Food",
             "content" =>    "<p style='margin-bottom: 10px;'>
                                 In the symphony of life, food is the melody that delights our senses and nourishes our souls. From the first tantalizing aroma to the last lingering taste, every meal is a journey of discovery, a celebration of flavor, and an invitation to savor the richness of the world around us.
